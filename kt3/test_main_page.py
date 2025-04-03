@@ -22,6 +22,16 @@ def test_guest_see_login_button(browser,jira_client):
 
 @pytest.mark.all_test
 @pytest.mark.main_page
+@pytest.mark.xfail
+def test_guest_see_login_button_xfail(browser,jira_client):
+    url = ("https://ogorodnik.by/")
+    page = MainPage(browser, url)
+    page.open()
+    page.should_be_login_button()
+
+
+@pytest.mark.all_test
+@pytest.mark.main_page
 @pytest.mark.login
 def test_guest_can_login_in_account(browser,jira_client):
     url = ("https://ogorodnik.by/")
@@ -70,3 +80,4 @@ def test_add_to_basket_product(browser, jira_client):
     product_page.add_to_basket()
     basket_page = BasketPage(browser, browser.current_url)
     basket_page.product_in_basket("Перец сладкий Аристотель F1")
+

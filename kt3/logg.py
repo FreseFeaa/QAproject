@@ -14,7 +14,7 @@ logger = logging.getLogger("Selenium")
 logger.setLevel(logging.DEBUG)
 
 handler_file = logging.FileHandler("info.log",mode = "a")
-formater = logging.Formatter("%(asctime)s %(filename)s %(message)s")
+formater = logging.Formatter("%(levelname)s %(asctime)s %(filename)s %(message)s")
 handler_console = logging.StreamHandler()
 
 handler_file.setLevel(logging.DEBUG)

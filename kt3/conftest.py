@@ -13,6 +13,7 @@ API_TOKEN = os.getenv("API_TOKEN_SIGMA")
 JIRA_SERVER = os.getenv("JIRA_SERVER")
 JIRA_USERNAME = os.getenv("JIRA_USERNAME")
 bag_screenshot = "failTest.png"
+# xfailOK = "xfailOK.png"
 
 def pytest_addoption(parser):
     parser.addoption("--languages",action="store",default="ru",help="Выберите язык")
@@ -20,6 +21,7 @@ def pytest_addoption(parser):
 
 @pytest.fixture(scope="session")
 def jira_client(request):
+    logger.critical("_"*200)
     if request.config.getoption("jira"):
         jira = JIRA( server=JIRA_SERVER, basic_auth=(JIRA_USERNAME,API_TOKEN))
         return jira
@@ -38,16 +40,15 @@ def browser(request):
 def pytest_runtest_makereport(item,call):
     outcome = yield
     report = outcome.get_result()
-    logger.debug(f"Стадия теста: {report.when}, Cостояние: {report.when}")  #ТУТ Я ПОКА ЧТ ЗАКОНЧИЛ
+    logger.debug(f"Стадия теста: {report.when}, Cостояние: {report.when}")
     print(report)
-
-    if report.when == "call" and hasattr(report,"wasxfail") and report.outcome == "passed":
-        print("Тест с меткой xfail - почему-то прошёл")
-
-    if report.when == "call" and report.outcome == "failed": 
+#тест упал :(
+    if (report.when == "call" and report.outcome == "failed") or (report.when == "call" and hasattr(report,"wasxfail") and report.outcome == "passed"): 
+        logger.error(f"Тест не прошёл ({report.outcome})")  
         if "browser" in item.funcargs: 
             browser = item.funcargs["browser"]  
             browser.save_screenshot(bag_screenshot) 
+            logger.debug(f"Скриншот ({bag_screenshot})")  
 
         if "jira_client" in item.funcargs: 
             jira = item.funcargs["jira_client"]
@@ -66,4 +67,5 @@ def pytest_runtest_makereport(item,call):
                 new_issue = jira.create_issue(fields=jira_issue)
 
                 jira.add_attachment(new_issue.key,bag_screenshot)
+                logger.debug(f"Создание Бага в JIRA ({jira_issue['issuetype']}) {bag_screenshot})")  
                 

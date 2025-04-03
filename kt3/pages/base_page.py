@@ -6,8 +6,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from .locators import BasePageLocators
 from kt3.logg import logger
-
-
+from selenium.webdriver.common.by import By
 
 class BasePage():
     def __init__(self,browser,url,timeout=5):
@@ -27,10 +26,10 @@ class BasePage():
             self.browser.find_element(how, what)
 
         except NoSuchElementException:
-            self.logger.info(f"Обьект ({what}) есть")
+            self.logger.info(f"Обьект ({what}) нет")
             return False
         
-        self.logger.info(f"Обьекта ({what}) нет")
+        self.logger.info(f"Обьект ({what}) есть")
         return True
 
 
@@ -61,7 +60,12 @@ class BasePage():
 
     def should_be_login_button(self):
         self.logger.info(f"Проверка существования кнопки профиля")
-        assert self.is_element_present(*BasePageLocators.ACCOUNT_BUTTON), "Нет кнопки профиля"
+        try:
+            assert self.is_element_present(*BasePageLocators.ACCOUNT_BUTTON), "Нет кнопки профиля"
+        except AssertionError as erorr:
+            self.logger.error(f"{erorr}")
+            raise erorr
+        
     
     def login_button_click(self):
         self.logger.info(f"Кликаем по кнопки профиля")
