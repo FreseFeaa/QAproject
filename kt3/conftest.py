@@ -21,7 +21,7 @@ def pytest_addoption(parser):
 
 @pytest.fixture(scope="session")
 def jira_client(request):
-    logger.critical("_"*200)
+    logger.info("\n"+"_"*180+"\n")
     if request.config.getoption("jira"):
         jira = JIRA( server=JIRA_SERVER, basic_auth=(JIRA_USERNAME,API_TOKEN))
         return jira
@@ -32,6 +32,7 @@ def browser(request):
     options =Options()
     options.add_experimental_option("prefs",{"intl.accept_languages":language})
     browser = webdriver.Chrome(options=options)
+    browser.set_window_size(1200,1200)
     yield browser
     print("\n quit browser")
     browser.quit()
@@ -44,7 +45,7 @@ def pytest_runtest_makereport(item,call):
     print(report)
 #тест упал :(
     if (report.when == "call" and report.outcome == "failed") or (report.when == "call" and hasattr(report,"wasxfail") and report.outcome == "passed"): 
-        logger.error(f"Тест не прошёл ({report.outcome})")  
+        logger.error(f"Тест не прошёл ({report.outcome}) или у него была метка xfail и он прошёл")  
         if "browser" in item.funcargs: 
             browser = item.funcargs["browser"]  
             browser.save_screenshot(bag_screenshot) 
