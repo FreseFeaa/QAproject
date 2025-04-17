@@ -14,8 +14,10 @@ from .pages.basket_page import BasketPage
 # Общая большая кт  - Паттерн PageObject
 @pytest.mark.all_test
 @pytest.mark.main_page
+@pytest.mark.solo
+@pytest.mark.parametrize("browser", ["firefox", "chrome"], indirect=True)
 def test_guest_see_login_button(browser,jira_client):
-    url = ("https://ogorodnik.by/")
+    url = ("https://www.google.com/")
     page = MainPage(browser, url)
     page.open()
     page.should_be_login_button()
@@ -33,6 +35,7 @@ def test_guest_see_login_button_xfail(browser,jira_client):
 @pytest.mark.all_test
 @pytest.mark.main_page
 @pytest.mark.login
+@pytest.mark.parametrize("browser", ["firefox", "chrome"], indirect=True)
 def test_guest_can_login_in_account(browser,jira_client):
     url = ("https://ogorodnik.by/")
     page = MainPage(browser, url)

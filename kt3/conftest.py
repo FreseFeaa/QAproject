@@ -4,8 +4,11 @@ import pytest
 from jira import JIRA
 from selenium import webdriver
 from dotenv import load_dotenv
-from selenium.webdriver.chrome.options import Options
 from kt3.logg import logger
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+
+
 
 load_dotenv(override=True)
 
@@ -29,9 +32,22 @@ def jira_client(request):
 @pytest.fixture
 def browser(request):
     language = request.config.getoption("languages")
-    options =Options()
-    options.add_experimental_option("prefs",{"intl.accept_languages":language})
-    browser = webdriver.Chrome(options=options)
+
+    hub_url = "http://192.168.56.1:5555/wd/hub"
+
+    param = request.param if hasattr(request, "param") else "chrome"
+    if param == "firefox":
+        options = FirefoxOptions()
+        options.set_preference('intl.accept_languages', language)
+
+    else:
+        options = ChromeOptions()
+        options.add_experimental_option("prefs",{"intl.accept_languages":language})
+
+    options.page_load_strategy = "eager"
+
+    browser = webdriver.Remote(command_executor=hub_url, options=options)
+
     browser.set_window_size(1200,1200)
     yield browser
     print("\n quit browser")

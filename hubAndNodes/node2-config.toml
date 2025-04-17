@@ -1,0 +1,21 @@
+[server]
+port = 7777
+
+[node]
+max-sessions = 8
+detect-drivers = false
+
+[[node.driver-configuration]]
+max-sessions = 4
+display-name = "Firefox"
+stereotype = { browserName  = "firefox" }
+#webdriver-path = "путь к драйверу"
+options = [
+    "--headless",
+    "--window-size=1200,1200"
+]
+
+[[node.driver-configuration]]
+max-sessions = 4
+display-name = "Edge"
+stereotype = { browserName  = "MicrosoftEdge" }

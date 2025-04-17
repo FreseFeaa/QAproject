@@ -1,0 +1,15 @@
+[server]
+port = 6666
+
+[node]
+max-sessions = 10
+detect-drivers = false
+
+[[node.driver-configuration]]
+max-sessions = 5
+display-name = "Chrome"
+stereotype = { browserName  = "chrome" }
+options = [
+    "--headless",
+    "--window-size=1000,1000"
+]
