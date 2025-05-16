@@ -8,6 +8,9 @@ from kt3.logg import logger
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
+# Для мобильного тестирования
+from appium import webdriver as AppiumWebDriver
+from appium.options.android import UiAutomator2Options
 
 
 load_dotenv(override=True)
@@ -17,6 +20,17 @@ JIRA_SERVER = os.getenv("JIRA_SERVER")
 JIRA_USERNAME = os.getenv("JIRA_USERNAME")
 bag_screenshot = "failTest.png"
 # xfailOK = "xfailOK.png"
+# Настройки андроида
+capabilities = dict(
+    platformName='Android',
+    automationName='uiautomator2',
+    deviceName='Android',
+    appPackage='com.android.settings',
+    appActivity='.Settings',
+    language='en',
+    locale='US'
+)
+appium_server_url = 'http://localhost:4723'
 
 def pytest_addoption(parser):
     parser.addoption("--languages",action="store",default="ru",help="Выберите язык")
@@ -36,19 +50,25 @@ def browser(request):
     hub_url = "http://192.168.56.1:5555/wd/hub"
 
     param = request.param if hasattr(request, "param") else "chrome"
+
     if param == "firefox":
         options = FirefoxOptions()
         options.set_preference('intl.accept_languages', language)
+        options.page_load_strategy = "eager"
+        browser = webdriver.Remote(command_executor=hub_url, options=options)
+        browser.set_window_size(1200,1200)
+
+    elif param.lower()== "android":
+        browser = AppiumWebDriver.Remote(appium_server_url, options=UiAutomator2Options().load_capabilities(capabilities))
 
     else:
         options = ChromeOptions()
         options.add_experimental_option("prefs",{"intl.accept_languages":language})
+        options.page_load_strategy = "eager"
+        browser = webdriver.Remote(command_executor=hub_url, options=options)
+        browser.set_window_size(1200,1200)
 
-    options.page_load_strategy = "eager"
 
-    browser = webdriver.Remote(command_executor=hub_url, options=options)
-
-    browser.set_window_size(1200,1200)
     yield browser
     print("\n quit browser")
     browser.quit()
