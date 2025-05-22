@@ -1770,3 +1770,30 @@ DEBUG 2025-05-21 13:05:30,975 conftest.py Стадия теста: teardown, Cо
 DEBUG 2025-05-21 13:12:01,769 conftest.py Стадия теста: setup, Cостояние: setup
 DEBUG 2025-05-21 13:12:07,822 conftest.py Стадия теста: call, Cостояние: call
 DEBUG 2025-05-21 13:12:09,089 conftest.py Стадия теста: teardown, Cостояние: teardown
+DEBUG 2025-05-22 16:59:24,477 conftest.py Стадия теста: setup, Cостояние: setup
+DEBUG 2025-05-22 16:59:24,479 conftest.py Стадия теста: teardown, Cостояние: teardown
+DEBUG 2025-05-22 17:08:31,712 conftest.py Стадия теста: setup, Cостояние: setup
+DEBUG 2025-05-22 17:08:32,092 conftest.py Стадия теста: call, Cостояние: call
+ERROR 2025-05-22 17:08:32,092 conftest.py Тест не прошёл (failed) или у него была метка xfail и он прошёл
+DEBUG 2025-05-22 17:10:24,461 conftest.py Стадия теста: setup, Cостояние: setup
+DEBUG 2025-05-22 17:10:24,462 conftest.py Стадия теста: teardown, Cостояние: teardown
+DEBUG 2025-05-22 17:12:31,543 conftest.py Стадия теста: setup, Cостояние: setup
+DEBUG 2025-05-22 17:12:43,997 conftest.py Стадия теста: call, Cостояние: call
+ERROR 2025-05-22 17:12:43,997 conftest.py Тест не прошёл (failed) или у него была метка xfail и он прошёл
+DEBUG 2025-05-22 17:15:10,305 conftest.py Стадия теста: setup, Cостояние: setup
+DEBUG 2025-05-22 17:15:10,306 conftest.py Стадия теста: teardown, Cостояние: teardown
+DEBUG 2025-05-22 17:19:05,333 conftest.py Стадия теста: setup, Cостояние: setup
+DEBUG 2025-05-22 17:19:05,335 conftest.py Стадия теста: teardown, Cостояние: teardown
+DEBUG 2025-05-22 17:20:01,797 conftest.py Стадия теста: setup, Cостояние: setup
+DEBUG 2025-05-22 17:20:03,010 conftest.py Стадия теста: call, Cостояние: call
+DEBUG 2025-05-22 17:20:05,251 conftest.py Стадия теста: teardown, Cостояние: teardown
+DEBUG 2025-05-22 17:22:10,546 conftest.py Стадия теста: setup, Cостояние: setup
+DEBUG 2025-05-22 17:22:16,094 conftest.py Стадия теста: call, Cостояние: call
+ERROR 2025-05-22 17:22:16,095 conftest.py Тест не прошёл (failed) или у него была метка xfail и он прошёл
+DEBUG 2025-05-22 17:22:16,969 conftest.py Скриншот (failTest.png)
+DEBUG 2025-05-22 17:22:18,357 conftest.py Стадия теста: teardown, Cостояние: teardown
+DEBUG 2025-05-22 17:23:42,508 conftest.py Стадия теста: setup, Cостояние: setup
+DEBUG 2025-05-22 17:23:48,130 conftest.py Стадия теста: call, Cостояние: call
+ERROR 2025-05-22 17:23:48,131 conftest.py Тест не прошёл (failed) или у него была метка xfail и он прошёл
+DEBUG 2025-05-22 17:23:49,092 conftest.py Скриншот (failTest.png)
+DEBUG 2025-05-22 17:23:50,424 conftest.py Стадия теста: teardown, Cостояние: teardown
